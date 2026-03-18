@@ -6,6 +6,7 @@
 
 - ✅ Scan Go modules (go.mod)
 - ✅ Scan NPM packages (package-lock.json)
+- ✅ Scan PNPM packages (pnpm-lock.yaml)
 - ✅ Query OSV.dev vulnerability database
 - ✅ Risk scoring (0-100)
 - ✅ Colorized terminal output
@@ -50,7 +51,7 @@ depscan --version
 ```
 🔍 Scanning dependencies in: ./myproject
 
-📦 Found 12 Go modules, 8 NPM packages
+📦 Found 12 Go modules, 8 NPM/PNPM packages
 
 📦 github.com/gin-gonic/gin@1.9.0 [Go]
    ❌ GHSA-xxxx-xxxx-xxxx [HIGH] Path traversal vulnerability...

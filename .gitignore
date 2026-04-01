@@ -1,5 +1,3 @@
-# Binaries
-depscan
 *.exe
 *.exe~
 *.dll

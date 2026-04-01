@@ -1,27 +1,50 @@
 package scorer
 
 import (
+	"github.com/jasonli0226/depscan/internal/integrity"
 	"github.com/jasonli0226/depscan/internal/scanner"
+	"github.com/jasonli0226/depscan/internal/typosquat"
 )
 
-// CalculateRiskScore calculates an overall risk score (0-100) for the scan results
-func CalculateRiskScore(results []scanner.ScanResult) int {
+// Points assigned per check type
+const (
+	pointsTyposquat = 15 // HIGH equivalent
+	pointsIntegrity = 30 // CRITICAL equivalent
+)
+
+// CalculateRiskScoreWithAll calculates risk from all check types:
+// OSV vulnerabilities, typosquat warnings, and integrity failures.
+func CalculateRiskScoreWithAll(
+	vulnResults []scanner.ScanResult,
+	typosquatResults []typosquat.TyposquatResult,
+	integrityResults []integrity.IntegrityResult,
+) int {
 	totalScore := 0
 
-	for _, result := range results {
+	// OSV vulnerabilities
+	for _, result := range vulnResults {
 		for _, vuln := range result.Vulnerabilities {
 			totalScore += scanner.SeverityScore(vuln.Severity)
 		}
 	}
 
-	// Cap at 100
+	// Typosquat hits
+	totalScore += len(typosquatResults) * pointsTyposquat
+
+	// Integrity failures
+	for _, r := range integrityResults {
+		if r.Status == integrity.StatusMismatch {
+			totalScore += pointsIntegrity
+		}
+	}
+
 	if totalScore > 100 {
 		return 100
 	}
 	return totalScore
 }
 
-// RiskLevel returns a human-readable risk level
+// RiskLevel returns a human-readable risk level.
 func RiskLevel(score int) string {
 	switch {
 	case score >= 70:

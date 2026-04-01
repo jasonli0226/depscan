@@ -22,8 +22,8 @@ var (
 
 var rootCmd = &cobra.Command{
 	Use:     "depscan <project-path>",
-	Short:   "Supply Chain Security Scanner for Go and Node.js dependencies",
-	Long:    "Scan Go modules and NPM/PNPM packages for known vulnerabilities using OSV.dev",
+	Short:   "Supply Chain Security Scanner for Go, Node.js, and Python dependencies",
+	Long:    "Scan Go modules, NPM/PNPM packages, and UV Python packages for known vulnerabilities using OSV.dev",
 	Version: version,
 	Args:    cobra.ExactArgs(1),
 	RunE:    runScan,
@@ -68,6 +68,12 @@ func runScan(cmd *cobra.Command, args []string) error {
 	if err == nil && len(pnpmDeps) > 0 {
 		fmt.Printf("📦 Found %d PNPM packages\n", len(pnpmDeps))
 		allDeps = append(allDeps, pnpmDeps...)
+	}
+
+	uvDeps, err := parser.ParseUVPackages(projectPath)
+	if err == nil && len(uvDeps) > 0 {
+		fmt.Printf("📦 Found %d UV packages\n", len(uvDeps))
+		allDeps = append(allDeps, uvDeps...)
 	}
 
 	if len(allDeps) == 0 {

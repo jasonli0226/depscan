@@ -15,9 +15,9 @@ const cacheTTL = 7 * 24 * time.Hour
 
 // PopularPackages holds the cached list of popular packages per ecosystem.
 type PopularPackages struct {
-	GoModules  []string  `json:"go_modules"`
-	NpmPackages []string `json:"npm_packages"`
-	UpdatedAt  time.Time `json:"updated_at"`
+	GoModules   []string  `json:"go_modules"`
+	NpmPackages []string  `json:"npm_packages"`
+	UpdatedAt   time.Time `json:"updated_at"`
 }
 
 // CacheDir returns the cache directory path, creating it if needed.

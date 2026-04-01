@@ -1,12 +1,13 @@
 # depscan
 
-🔍 **Supply Chain Security Scanner** - Scan Go and Node.js dependencies for known vulnerabilities.
+🔍 **Supply Chain Security Scanner** - Scan Go, Node.js, and Python dependencies for known vulnerabilities.
 
 ## Features
 
 - ✅ Scan Go modules (go.mod)
 - ✅ Scan NPM packages (package-lock.json)
 - ✅ Scan PNPM packages (pnpm-lock.yaml)
+- ✅ Scan UV Python packages (uv.lock)
 - ✅ Query OSV.dev vulnerability database
 - ✅ Risk scoring (0-100)
 - ✅ Colorized terminal output
@@ -51,7 +52,7 @@ depscan --version
 ```
 🔍 Scanning dependencies in: ./myproject
 
-📦 Found 12 Go modules, 8 NPM/PNPM packages
+📦 Found 12 Go modules, 8 NPM/PNPM packages, 5 UV packages
 
 📦 github.com/gin-gonic/gin@1.9.0 [Go]
    ❌ GHSA-xxxx-xxxx-xxxx [HIGH] Path traversal vulnerability...
@@ -125,7 +126,6 @@ Score is capped at 100.
 ## Roadmap
 
 - [ ] SARIF output for CI/CD
-- [ ] Python dependencies (requirements.txt)
 - [ ] Private registry support
 - [ ] SBOM generation
 - [ ] Auto-fix suggestions

@@ -18,7 +18,7 @@ type Dependency struct {
 // ParseGoModules parses go.mod file and extracts dependencies
 func ParseGoModules(projectPath string) ([]Dependency, error) {
 	goModPath := filepath.Join(projectPath, "go.mod")
-	
+
 	file, err := os.Open(goModPath)
 	if err != nil {
 		return nil, fmt.Errorf("cannot open go.mod: %w", err)
@@ -31,7 +31,7 @@ func ParseGoModules(projectPath string) ([]Dependency, error) {
 
 	for scanner.Scan() {
 		line := strings.TrimSpace(scanner.Text())
-		
+
 		// Skip empty lines and comments
 		if line == "" || strings.HasPrefix(line, "//") {
 			continue
@@ -60,7 +60,7 @@ func ParseGoModules(projectPath string) ([]Dependency, error) {
 			if len(parts) >= 2 {
 				name := parts[0]
 				version := strings.TrimPrefix(parts[1], "v")
-				
+
 				// Skip indirect dependencies marker
 				if len(parts) > 2 && parts[2] == "// indirect" {
 					// Still include it, just note it's indirect
